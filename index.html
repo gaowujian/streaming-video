@@ -17,7 +17,7 @@
       let pendingAppend = false; // 用于跟踪是否有待处理的 appendBuffer 操作
 
       // 当媒体源打开时
-      const mimeCodec = 'video/mp4; codecs="avc1.64000d, mp4a.40.2"';
+      const mimeCodec = 'video/mp4; codecs="avc1.64001f, mp4a.40.2"';
       mediaSource.addEventListener("sourceopen", () => {
         sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
         sourceBuffer.mode = "sequence"; // 设置模式为"sequence"以便流式播放

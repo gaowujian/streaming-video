@@ -13,6 +13,8 @@ https://developer.mozilla.org/en-US/docs/Web/API/Media_Source_Extensions_API/Tra
 
 - 把一个本地文件 mp4 转化为一个符合谷歌浏览器的分片 MP4
   ffmpeg -i h264.mp4 -movflags frag_keyframe+empty_moov+default_base_moof output.mp4
+- 其他格式转换
+  ffmpeg -i test.mov -c:v copy -c:a copy -movflags frag_keyframe+empty_moov+default_base_moof output.mp4
 
 # 测试一个 mp4 是否支持 mse
 
