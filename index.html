@@ -4,7 +4,7 @@
     <title>流式视频播放</title>
   </head>
   <body>
-    <video id="videoPlayer" controls autoplay width="700px"></video>
+    <video id="videoPlayer" controls autoplay muted width="700px"></video>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script>
       const videoPlayer = document.getElementById("videoPlayer");
@@ -17,16 +17,16 @@
       let pendingAppend = false; // 用于跟踪是否有待处理的 appendBuffer 操作
 
       // 当媒体源打开时
-      const mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
+      const mimeCodec = 'video/mp4; codecs="avc1.64000d, mp4a.40.2"';
       mediaSource.addEventListener("sourceopen", () => {
         sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
         sourceBuffer.mode = "sequence"; // 设置模式为"sequence"以便流式播放
       });
 
-      // 连接到 Socket.IO 服务器
+      // 连接到 Socket.IO 服务器 frag_bunny.mp4
       const socket = io("http://localhost:3000", {
         query: {
-          name: "frag_bunny.mp4",
+          name: "output.mp4",
         },
       });
 
@@ -35,11 +35,11 @@
       });
 
       socket.on("videoData", (data) => {
-        console.log("data:", data);
-        console.log("sourceBuffer:", sourceBuffer);
-        console.log("mediaSource.readyState :", mediaSource.readyState);
+        // console.log("data:", data);
+        // console.log("sourceBuffer:", sourceBuffer);
+        // console.log("mediaSource.readyState :", mediaSource.readyState);
         if (sourceBuffer && mediaSource.readyState === "open") {
-          console.log("sourceBuffer:", sourceBuffer);
+          //   console.log("sourceBuffer:", sourceBuffer);
           // 检查是否有待处理的 appendBuffer 操作
           if (!sourceBuffer.updating) {
             // 如果没有待处理的操作，执行新的 appendBuffer 操作

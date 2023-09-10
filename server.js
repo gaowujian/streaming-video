@@ -26,7 +26,8 @@ app.get("/", (req, res) => {
   res.send("Hello, World!"); // 用您的根路由处理逻辑替换这里的示例响应
 });
 app.get("/video", (req, res) => {
-  const filePath = path.join(__dirname, "2vuy.mov");
+  const name = req.query.name;
+  const filePath = path.join(__dirname, name || "frag_bunny.mp4");
   const stat = fs.statSync(filePath);
 
   res.writeHead(200, {
@@ -80,6 +81,7 @@ io.on("connection", (socket) => {
     }
   });
 
+  //   如果当前视频支持流式，播放可以直接readstream，否则需要使用ffmpeg等进行转换
   const readableStream = fs.createReadStream(filePath);
 
   readableStream.on("data", (chunk) => {
@@ -92,6 +94,30 @@ io.on("connection", (socket) => {
     // 关闭WebSocket连接
     socket.disconnect(true);
   });
+
+  // 使用 fluent-ffmpeg 打开 MP4 文件
+  // 创建 ffmpeg 命令
+  //   const command = ffmpeg(filePath);
+
+  //   // 指定输出格式为 MP4
+  //   command.toFormat("mp4");
+
+  //   // 创建可读流
+  //   const stream = command.pipe();
+
+  //   stream.on("data", (chunk) => {
+  //     socket.emit("videoData", chunk);
+  //   });
+
+  //   stream.on("end", () => {
+  //     socket.emit("videoDataComplete");
+  //     // 关闭WebSocket连接
+  //     socket.disconnect(true);
+  //   });
+
+  //   stream.on("error", (err) => {
+  //     console.error("Stream error:", err);
+  //   });
 });
 
 server.listen(3000, () => {
