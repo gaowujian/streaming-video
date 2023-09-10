@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
   res.send("Hello, World!"); // 用您的根路由处理逻辑替换这里的示例响应
 });
 app.get("/video", (req, res) => {
-  const filePath = path.join(__dirname, "frag_bunny.mp4");
+  const filePath = path.join(__dirname, "2vuy.mov");
   const stat = fs.statSync(filePath);
 
   res.writeHead(200, {
@@ -39,7 +39,11 @@ app.get("/video", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  const filePath = path.join(__dirname, "frag_bunny.mp4");
+  // 获取客户端传递的请求参数
+  const { name } = socket.handshake.query;
+  console.log(`流式播放的视频是, ${name || "frag_bunny.mp4"}`);
+
+  const filePath = path.join(__dirname, name || "frag_bunny.mp4");
   const file = fs.readFileSync(filePath);
   console.log("filePath:", filePath);
   console.log("byteLength.b:", file.byteLength);

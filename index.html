@@ -24,7 +24,11 @@
       });
 
       // 连接到 Socket.IO 服务器
-      const socket = io("http://localhost:3000");
+      const socket = io("http://localhost:3000", {
+        query: {
+          name: "frag_bunny.mp4",
+        },
+      });
 
       socket.on("connect", () => {
         console.log("Connected to Socket.IO server");
